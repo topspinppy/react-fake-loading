@@ -1,28 +1,33 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components'
+import { Spin } from 'antd'
 
-class App extends Component {
+
+class FakeLoading extends Component {
+  state = {
+    isLoading: true,
+  }
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({ isLoading: false })
+    }, this.props.time)
+  }
   render() {
+    const { children } = this.props
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Fragment>
+        {
+          this.state.isLoading === true ? (
+            <LandingPage>
+              <Spin tip="Loading ..." size="large" />
+            </LandingPage>
+          ) : (
+            children
+          )
+        }
+      </Fragment>
     );
   }
 }
 
-export default App;
+export default FakeLoading;
